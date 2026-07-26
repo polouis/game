@@ -1,0 +1,22 @@
+{
+  "components": [
+    {
+      "type": "mesh",
+      "value": {
+        "id": "player-1234"
+      }
+    },
+    {
+      "type": "name",
+      "value": {
+        "name": "The Player"
+      }
+    },
+    {
+      "type": "transform",
+      "value": {
+        "x": 0.0, "y": 0.0, "z": 0.0
+      }
+    }
+  ]
+}

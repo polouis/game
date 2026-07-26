@@ -1,0 +1,29 @@
+
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+vars:
+  DIST_DIR: dist
+  EXECUTABLE_NAME: game
+  ASSET_DIR: asset
+  TMP_DIR: tmp
+
+tasks:
+  build:
+    desc: Build the game
+    deps: [assets]
+    cmd: go build -o {{.DIST_DIR}}/{{.EXECUTABLE_NAME}} ./game.go
+
+  run:
+    deps: [assets]
+    cmd: cd {{.DIST_DIR}} && go run ../game.go
+
+  clean:
+    desc: Clean built artifacts
+    cmds:
+      - go clean
+      - rm -rf {{.DIST_DIR}} {{.TMP_DIR}}
+
+  assets:
+    cmds:
+      - go run github.com/polouis/engine/cmd/assetc all --asset {{.ASSET_DIR}} --dist {{.DIST_DIR}} --tmp {{.TMP_DIR}}

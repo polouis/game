@@ -1,0 +1,22 @@
+{
+  "components": [
+    {
+      "type": "mesh",
+      "value": {
+        "id": "sq-01"
+      }
+    },
+    {
+      "type": "name",
+      "value": {
+        "name": "The Sq"
+      }
+    },
+    {
+      "type": "transform",
+      "value": {
+        "x": 0.5, "y": 0.0, "z": 0.0
+      }
+    }
+  ]
+}
