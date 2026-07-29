@@ -14,12 +14,14 @@ type HealthComponent struct {
 }
 
 type GameWorld struct {
-	HealthStore *engine.ComponentArray[HealthComponent]
+	HealthStore      *engine.ComponentArray[HealthComponent]
+	InputIntentStore *engine.ComponentArray[InputIntentComponent]
 }
 
 func NewGameWorld() *GameWorld {
 	return &GameWorld{
-		HealthStore: engine.NewComponentArray[HealthComponent](),
+		HealthStore:      engine.NewComponentArray[HealthComponent](),
+		InputIntentStore: engine.NewComponentArray[InputIntentComponent](),
 	}
 }
 
@@ -44,7 +46,7 @@ func loadMeshes(ctx *engine.Context) {
 	loadMeshFromFile(ctx, "./asset/mesh/square.json")
 }
 
-func initialize(ctx *engine.Context) {
+func initialize(ctx *engine.Context, gw *GameWorld) {
 
 	loadMeshes(ctx)
 
@@ -57,6 +59,8 @@ func initialize(ctx *engine.Context) {
 	err = ctx.RM.LoadEntity("player", dat)
 	checkErr(err)
 	playerEnt, err = ctx.RM.Spawn(ctx, "player")
+	checkErr(err)
+	gw.InputIntentStore.Upsert(playerEnt, InputIntentComponent{})
 
 	dat, err = os.ReadFile("./asset/entity/square.json")
 	checkErr(err)
@@ -66,11 +70,8 @@ func initialize(ctx *engine.Context) {
 	checkErr(err)
 }
 
-func update(ctx *engine.Context, deltaTime uint64) {
-	cmd := engine.HandleInput(ctx, deltaTime)
-	if cmd != nil {
-		cmd.Execute(ctx, playerEnt)
-	}
+func update(ctx *engine.Context, gw *GameWorld, deltaTime uint64) {
+	UpdateInputSystem(ctx, gw, deltaTime)
 
 	engine.UpdatePhysicsSystem(ctx, deltaTime)
 	engine.UpdateRenderSystem(ctx, deltaTime)
@@ -84,8 +85,13 @@ func main() {
 
 	fmt.Println("Game starting !")
 	ctx := engine.New(types.SDL)
+	gameWorld := NewGameWorld()
 
-	err := engine.Run(ctx, initialize, update, release)
+	err := engine.Run(
+		ctx,
+		func(ctx *engine.Context) { initialize(ctx, gameWorld) },
+		func(ctx *engine.Context, deltaTime uint64) { update(ctx, gameWorld, deltaTime) },
+		release)
 
 	if err != nil {
 		fmt.Printf("Got error during run : %v", err)

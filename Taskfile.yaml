@@ -12,11 +12,11 @@ tasks:
   build:
     desc: Build the game
     deps: [assets]
-    cmd: go build -o {{.DIST_DIR}}/{{.EXECUTABLE_NAME}} ./game.go
+    cmd: go build -o {{.DIST_DIR}}/{{.EXECUTABLE_NAME}} .
 
   run:
     deps: [assets]
-    cmd: cd {{.DIST_DIR}} && go run ../game.go
+    cmd: cd {{.DIST_DIR}} && go run ..
 
   clean:
     desc: Clean built artifacts
