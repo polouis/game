@@ -72,6 +72,7 @@ func initialize(ctx *engine.Context, gw *GameWorld) {
 
 func update(ctx *engine.Context, gw *GameWorld, deltaTime uint64) {
 	UpdateInputSystem(ctx, gw, deltaTime)
+	UpdateMovementSystem(ctx, gw, deltaTime)
 
 	engine.UpdatePhysicsSystem(ctx, deltaTime)
 	engine.UpdateRenderSystem(ctx, deltaTime)

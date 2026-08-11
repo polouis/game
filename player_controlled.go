@@ -13,19 +13,17 @@ func UpdateInputSystem(ctx *engine.Context, gw *GameWorld, deltaTime uint64) {
 	var x, y float32
 	if engine.GetKeyState(ctx, types.Up) || engine.GetButtonState(ctx, types.ButtonUp) {
 		y += 1
-	}
-	if engine.GetKeyState(ctx, types.Down) || engine.GetButtonState(ctx, types.ButtonDown) {
+	} else if engine.GetKeyState(ctx, types.Down) || engine.GetButtonState(ctx, types.ButtonDown) {
 		y -= 1
+	} else {
+		y = 0
 	}
 	if engine.GetKeyState(ctx, types.Left) || engine.GetButtonState(ctx, types.ButtonLeft) {
 		x -= 1
-	}
-	if engine.GetKeyState(ctx, types.Right) || engine.GetButtonState(ctx, types.ButtonRight) {
+	} else if engine.GetKeyState(ctx, types.Right) || engine.GetButtonState(ctx, types.ButtonRight) {
 		x += 1
-	}
-
-	if x == 0 && y == 0 {
-		return
+	} else {
+		x = 0
 	}
 
 	for _, intent := range gw.InputIntentStore.All() {
