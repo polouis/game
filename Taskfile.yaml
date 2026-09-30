@@ -27,3 +27,13 @@ tasks:
   assets:
     cmds:
       - go run github.com/polouis/engine/cmd/assetc all --asset {{.ASSET_DIR}} --dist {{.DIST_DIR}} --tmp {{.TMP_DIR}}
+
+  test_all:
+    deps: [test,test_engine]
+
+  test:
+    cmd: go test -v ./...
+
+  test_engine:
+    cmd: go test -v ../engine/...
+
