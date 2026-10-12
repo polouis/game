@@ -54,6 +54,9 @@ func initialize(ctx *engine.Context, gw *GameWorld) {
 	err := atlas.Load(engine.AtlasLoadCrunch, engine.ImageLoadAseprite)
 	checkErr(err)
 
+	err = ctx.RM.LoadPipeline(ctx, nil)
+	checkErr(err)
+
 	dat, err := os.ReadFile("./asset/entity/player.json")
 	checkErr(err)
 	err = ctx.RM.LoadEntity("player", dat)
@@ -66,6 +69,7 @@ func initialize(ctx *engine.Context, gw *GameWorld) {
 	checkErr(err)
 	err = ctx.RM.LoadEntity("square", dat)
 	checkErr(err)
+
 	squareEnt, err = ctx.RM.Spawn(ctx, "square")
 	checkErr(err)
 }
@@ -80,6 +84,7 @@ func update(ctx *engine.Context, gw *GameWorld, deltaTime uint64) {
 
 func release(ctx *engine.Context) {
 	engine.ReleaseRenderSystem(ctx)
+	ctx.RM.ReleasePipelines(ctx)
 }
 
 func main() {
