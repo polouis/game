@@ -3,7 +3,8 @@
     {
       "type": "mesh",
       "value": {
-        "id": "sq-01"
+        "mesh_id": "sq-01",
+        "material_id": "mat-001"
       }
     },
     {

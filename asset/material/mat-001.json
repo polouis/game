@@ -1,0 +1,6 @@
+{
+  "id": "mat-001",
+  "vertex_shader": "PositionColor",
+  "fragment_shader": "SolidColor",
+  "vertex_format": "position_color"
+}
