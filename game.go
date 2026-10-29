@@ -41,14 +41,26 @@ func loadMeshFromFile(ctx *engine.Context, filePath string) {
 	checkErr(err)
 }
 
+func loadMaterialFromFile(ctx *engine.Context, filePath string) {
+	dat, err := os.ReadFile(filePath)
+	checkErr(err)
+	err = ctx.RM.LoadMaterial(dat)
+	checkErr(err)
+}
+
 func loadMeshes(ctx *engine.Context) {
 	loadMeshFromFile(ctx, "./asset/mesh/1.json")
 	loadMeshFromFile(ctx, "./asset/mesh/square.json")
 }
 
+func loadMaterial(ctx *engine.Context) {
+	loadMaterialFromFile(ctx, "./asset/material/mat-001.json")
+}
+
 func initialize(ctx *engine.Context, gw *GameWorld) {
 
 	loadMeshes(ctx)
+	loadMaterial(ctx)
 
 	atlas := engine.NewAtlas()
 	err := atlas.Load(engine.AtlasLoadCrunch, engine.ImageLoadAseprite)

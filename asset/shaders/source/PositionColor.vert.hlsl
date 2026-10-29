@@ -5,7 +5,7 @@ cbuffer UniformBlock : register(b0, space1)
 
 struct VSInput
 {
-    float2 a_position : POSITION;
+    float3 a_position : POSITION;
     float4 a_color    : COLOR;
 };
 
