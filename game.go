@@ -41,10 +41,17 @@ func loadMeshFromFile(ctx *engine.Context, filePath string) {
 	checkErr(err)
 }
 
+func loadEffectFromFile(ctx *engine.Context, filePath string) {
+	dat, err := os.ReadFile(filePath)
+	checkErr(err)
+	err = ctx.RM.LoadEffect(ctx, dat)
+	checkErr(err)
+}
+
 func loadMaterialFromFile(ctx *engine.Context, filePath string) {
 	dat, err := os.ReadFile(filePath)
 	checkErr(err)
-	err = ctx.RM.LoadMaterial(dat)
+	err = ctx.RM.LoadMaterial(ctx, dat)
 	checkErr(err)
 }
 
@@ -53,20 +60,22 @@ func loadMeshes(ctx *engine.Context) {
 	loadMeshFromFile(ctx, "./asset/mesh/square.json")
 }
 
-func loadMaterial(ctx *engine.Context) {
+func loadEffects(ctx *engine.Context) {
+	loadEffectFromFile(ctx, "./asset/effect/solid_color.json")
+}
+
+func loadMaterials(ctx *engine.Context) {
 	loadMaterialFromFile(ctx, "./asset/material/mat-001.json")
 }
 
 func initialize(ctx *engine.Context, gw *GameWorld) {
 
 	loadMeshes(ctx)
-	loadMaterial(ctx)
+	loadMaterials(ctx)
+	loadEffects(ctx)
 
 	atlas := engine.NewAtlas()
 	err := atlas.Load(engine.AtlasLoadCrunch, engine.ImageLoadAseprite)
-	checkErr(err)
-
-	err = ctx.RM.LoadPipeline(ctx, nil)
 	checkErr(err)
 
 	dat, err := os.ReadFile("./asset/entity/player.json")
@@ -96,7 +105,7 @@ func update(ctx *engine.Context, gw *GameWorld, deltaTime uint64) {
 
 func release(ctx *engine.Context) {
 	engine.ReleaseRenderSystem(ctx)
-	ctx.RM.ReleasePipelines(ctx)
+	ctx.RM.Release(ctx)
 }
 
 func main() {
