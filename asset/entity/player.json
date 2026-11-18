@@ -3,8 +3,8 @@
     {
       "type": "mesh",
       "value": {
-        "mesh_id": "player-1234",
-        "material_id": "mat-001"
+        "mesh": "player-1234",
+        "material": "mat-001"
       }
     },
     {

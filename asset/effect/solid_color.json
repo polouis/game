@@ -1,0 +1,8 @@
+{
+  "name": "solid_color",
+  "vertex_shader": "PositionColor.vert",
+  "fragment_shader": "SolidColor.frag",
+  "requires_vertex_format": "position_color",
+  "vertex_uniform_buffers": 1,
+  "fragment_samplers": 0
+}
