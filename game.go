@@ -104,8 +104,6 @@ func update(ctx *engine.Context, gw *GameWorld, deltaTime uint64) {
 }
 
 func release(ctx *engine.Context) {
-	engine.ReleaseRenderSystem(ctx)
-	ctx.RM.Release(ctx)
 }
 
 func main() {
